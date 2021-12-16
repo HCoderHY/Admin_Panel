@@ -1,24 +1,26 @@
 # -*- coding: utf-8 -*-
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QMessageBox
 import os
+import geocoder
+import stun
+import uuid
 import webbrowser
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(963, 240)
+        MainWindow.resize(1366, 268)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(0, 0, 963, 51))
+        self.label.setGeometry(QtCore.QRect(0, 0, 1366, 61))
         font = QtGui.QFont()
         font.setFamily("Particle")
-        font.setPointSize(32)
+        font.setPointSize(40)
         self.label.setFont(font)
         self.label.setStyleSheet("background: #221F1F; color: white;")
         self.label.setObjectName("label")
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton.setGeometry(QtCore.QRect(20, 160, 451, 61))
+        self.pushButton.setGeometry(QtCore.QRect(1040, 90, 311, 61))
         font = QtGui.QFont()
         font.setFamily("Particle")
         font.setPointSize(38)
@@ -26,7 +28,7 @@ class Ui_MainWindow(object):
         self.pushButton.setStyleSheet("background: #221F1F; color: white; border: 0px solid white; border-radius: 5px;")
         self.pushButton.setObjectName("pushButton")
         self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_2.setGeometry(QtCore.QRect(495, 160, 451, 61))
+        self.pushButton_2.setGeometry(QtCore.QRect(360, 180, 311, 61))
         font = QtGui.QFont()
         font.setFamily("Particle")
         font.setPointSize(36)
@@ -34,7 +36,7 @@ class Ui_MainWindow(object):
         self.pushButton_2.setStyleSheet("background: #221F1F; color: white; border: 0px solid white; border-radius: 5px;")
         self.pushButton_2.setObjectName("pushButton_2")
         self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_3.setGeometry(QtCore.QRect(20, 70, 291, 61))
+        self.pushButton_3.setGeometry(QtCore.QRect(20, 90, 311, 61))
         font = QtGui.QFont()
         font.setFamily("Particle")
         font.setPointSize(38)
@@ -42,7 +44,7 @@ class Ui_MainWindow(object):
         self.pushButton_3.setStyleSheet("background: #221F1F; color: white; border: 0px solid white; border-radius: 5px;")
         self.pushButton_3.setObjectName("pushButton_3")
         self.pushButton_5 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_5.setGeometry(QtCore.QRect(650, 70, 291, 61))
+        self.pushButton_5.setGeometry(QtCore.QRect(700, 90, 311, 61))
         font = QtGui.QFont()
         font.setFamily("Particle")
         font.setPointSize(34)
@@ -50,13 +52,37 @@ class Ui_MainWindow(object):
         self.pushButton_5.setStyleSheet("background: #221F1F; color: white; border: 0px solid white; border-radius: 5px;")
         self.pushButton_5.setObjectName("pushButton_5")
         self.pushButton_7 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_7.setGeometry(QtCore.QRect(340, 70, 291, 61))
+        self.pushButton_7.setGeometry(QtCore.QRect(360, 90, 311, 61))
         font = QtGui.QFont()
         font.setFamily("Particle")
         font.setPointSize(34)
         self.pushButton_7.setFont(font)
         self.pushButton_7.setStyleSheet("background: #221F1F; color: white; border: 0px solid white; border-radius: 5px;")
         self.pushButton_7.setObjectName("pushButton_7")
+        self.pushButton_8 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_8.setGeometry(QtCore.QRect(20, 180, 311, 61))
+        font = QtGui.QFont()
+        font.setFamily("Particle")
+        font.setPointSize(34)
+        self.pushButton_8.setFont(font)
+        self.pushButton_8.setStyleSheet("background: #221F1F; color: white; border: 0px solid white; border-radius: 5px;")
+        self.pushButton_8.setObjectName("pushButton_8")
+        self.pushButton_4 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_4.setGeometry(QtCore.QRect(1040, 180, 311, 61))
+        font = QtGui.QFont()
+        font.setFamily("Particle")
+        font.setPointSize(36)
+        self.pushButton_4.setFont(font)
+        self.pushButton_4.setStyleSheet("background: #221F1F; color: white; border: 0px solid white; border-radius: 5px;")
+        self.pushButton_4.setObjectName("pushButton_4")
+        self.pushButton_9 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_9.setGeometry(QtCore.QRect(700, 180, 311, 61))
+        font = QtGui.QFont()
+        font.setFamily("Particle")
+        font.setPointSize(34)
+        self.pushButton_9.setFont(font)
+        self.pushButton_9.setStyleSheet("background: #221F1F; color: white; border: 0px solid white; border-radius: 5px;")
+        self.pushButton_9.setObjectName("pushButton_9")
         MainWindow.setCentralWidget(self.centralwidget)
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -67,8 +93,13 @@ class Ui_MainWindow(object):
         self.pushButton.clicked.connect(self.p1)
         self.pushButton_2.clicked.connect(self.p2)
         self.pushButton_7.clicked.connect(self.p7)
+        self.pushButton_4.clicked.connect(self.p4)
+        self.pushButton_9.clicked.connect(self.p9)
+        self.pushButton_8.clicked.connect(self.p8)
     def p3(self):
         os.system("ipconfig/all")
+    def p4(self):
+        webbrowser.open_new_tab(f"https://www.google.com.ua/maps/place/{geocoder.ip('me').latlng[0]},{geocoder.ip('me').latlng[1]}")
     def p5(self):
         os.system("shutdown /r /t 1")
     def p1(self):
@@ -78,15 +109,22 @@ class Ui_MainWindow(object):
         os.system("getmac")
     def p7(self):
         os.system("shutdown -s")
+    def p9(self):
+        print(geocoder.ip('me').latlng)
+    def p8(self):
+        print(stun.get_ip_info())
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "ADMIN PANEL FOR PC 0.0.6"))
-        self.label.setText(_translate("MainWindow", "                                 Admin Panel"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "ADMIN PANEL FOR PC 0.0.3"))
+        self.label.setText(_translate("MainWindow", "                                       Admin Panel"))
         self.pushButton.setText(_translate("MainWindow", "IAP"))
         self.pushButton_2.setText(_translate("MainWindow", "GETMAC"))
         self.pushButton_3.setText(_translate("MainWindow", "IP-ALL"))
         self.pushButton_5.setText(_translate("MainWindow", "restart"))
         self.pushButton_7.setText(_translate("MainWindow", "Turn off"))
+        self.pushButton_8.setText(_translate("MainWindow", "Ip address"))
+        self.pushButton_4.setText(_translate("MainWindow", "open geo"))
+        self.pushButton_9.setText(_translate("MainWindow", "Geolocation"))
 import sys
 app = QtWidgets.QApplication(sys.argv)
 MainWindow = QtWidgets.QMainWindow()
